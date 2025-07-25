@@ -231,27 +231,24 @@
             height: 350px;
         }
 
-        .photo-placeholder {
+        .profile-image {
             width: 100%;
             height: 100%;
             border-radius: 20px;
-            background: linear-gradient(45deg, rgba(100, 255, 218, 0.1), rgba(187, 134, 252, 0.1));
-            border: 2px dashed #64ffda;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background: linear-gradient(45deg, rgba(100, 255, 218, 0.2), rgba(187, 134, 252, 0.2));
+            border: 2px solid #64ffda;
             position: relative;
             overflow: hidden;
             transition: all 0.3s ease;
         }
 
-        .photo-placeholder:hover {
+        .profile-image:hover {
             border-color: #bb86fc;
             transform: scale(1.02);
+            box-shadow: 0 15px 35px rgba(100, 255, 218, 0.3);
         }
 
-        .photo-placeholder::before {
+        .profile-image::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -260,6 +257,7 @@
             height: 200%;
             background: linear-gradient(45deg, transparent, rgba(100, 255, 218, 0.1), transparent);
             animation: shine 3s infinite;
+            z-index: 1;
         }
 
         @keyframes shine {
@@ -267,17 +265,13 @@
             100% { transform: rotate(360deg); }
         }
 
-        .photo-icon {
-            font-size: 3rem;
-            color: #64ffda;
-            margin-bottom: 1rem;
-            z-index: 1;
-        }
-
-        .photo-text {
-            color: #a0a0a0;
-            text-align: center;
-            z-index: 1;
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 18px;
+            position: relative;
+            z-index: 0;
         }
 
         /* Skills Section */
@@ -420,12 +414,8 @@
 
                     <div class="hero-photo">
                         <div class="photo-container">
-                            <div class="photo-placeholder">
-                                <div class="photo-icon">📸</div>
-                                <div class="photo-text">
-                                    <strong>Upload Your Photo</strong><br>
-                                    <small>Click to add your professional photo</small>
-                                </div>
+                            <div class="profile-image">
+                                <img src="assets/my.jpeg" alt="Professional headshot" />
                             </div>
                         </div>
                     </div>
@@ -485,34 +475,6 @@
             } else {
                 header.style.background = 'rgba(15, 15, 35, 0.8)';
             }
-        });
-
-        // Photo placeholder click handler
-        document.querySelector('.photo-placeholder').addEventListener('click', () => {
-            const input = document.createElement('input');
-            input.type = 'file';
-            input.accept = 'image/*';
-            input.style.display = 'none';
-            
-            input.addEventListener('change', (e) => {
-                const file = e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = (e) => {
-                        const placeholder = document.querySelector('.photo-placeholder');
-                        placeholder.style.backgroundImage = `url(${e.target.result})`;
-                        placeholder.style.backgroundSize = 'cover';
-                        placeholder.style.backgroundPosition = 'center';
-                        placeholder.innerHTML = '';
-                        placeholder.style.border = '2px solid #64ffda';
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-            
-            document.body.appendChild(input);
-            input.click();
-            document.body.removeChild(input);
         });
 
         // Add some interactive particles on mouse move
